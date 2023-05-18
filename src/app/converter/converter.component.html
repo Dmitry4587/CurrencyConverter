@@ -1,0 +1,82 @@
+<div *ngIf="headerLoading">
+  <div class="position-absolute top-50 start-50">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="headerMessage" class="card">
+  <div class="card-body">
+    <p class="h2 text-danger font-weight-bold">{{ headerMessage }}</p>
+  </div>
+</div>
+
+<div *ngIf="!headerLoading">
+  <header *ngIf="!headerMessage" class="card">
+    <marquee class="card-body" scrollamount="20">
+      <div class="d-flex">
+        <div class="header__rate" *ngFor="let item of headerRate">
+          <p class="h2 me-3">{{ item.from }} TO {{ item.to }}</p>
+          <p class="h2 me-4">{{ item.res }}</p>
+        </div>
+      </div>
+    </marquee>
+  </header>
+  <div class="wrapper">
+    <div class="d-flex mb-2">
+      <input
+        class="form-control me-2"
+        [disabled]="convertLoading"
+        type="number"
+        [(ngModel)]="amount"
+      />
+      <select
+        class="form-select"
+        [disabled]="convertLoading"
+        name="select"
+        [(ngModel)]="from"
+      >
+        <option [value]="item" *ngFor="let item of currency">{{ item }}</option>
+      </select>
+    </div>
+    <button
+      class="btn btn-primary m-2 align-self-center"
+      [disabled]="convertLoading || amount <= 0"
+      (click)="reverseConvert()"
+    >
+      Reverse
+    </button>
+    <div class="d-flex mb-2">
+      <input
+        class="form-control me-2"
+        disabled
+        type="number"
+        [(ngModel)]="response"
+      />
+      <select
+        class="form-select"
+        [disabled]="convertLoading"
+        name="select"
+        [(ngModel)]="to"
+      >
+        <option [value]="item" *ngFor="let item of currency">{{ item }}</option>
+      </select>
+    </div>
+
+    <button
+      class="btn btn-primary mt-2 align-self-start"
+      [disabled]="convertLoading || amount <= 0"
+      (click)="converCurency()"
+    >
+      Suibmit
+    </button>
+  </div>
+</div>
+
+<p
+  class="h2 text-danger text-center font-weight-bold mt-5"
+  *ngIf="!!convertMessage"
+>
+  {{ convertMessage }}
+</p>
