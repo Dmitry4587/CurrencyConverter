@@ -48,7 +48,7 @@ export class ConverterComponent implements OnInit {
     }
   }
 
-  async converCurency() {
+  async converCurrency() {
     this.convertLoading = true;
     this.convertMessage = '';
     try {
@@ -76,7 +76,7 @@ export class ConverterComponent implements OnInit {
     });
     try {
       this.headerRate = await Promise.all(resultsPromises);
-      await this.converCurency();
+      await this.converCurrency();
     } catch (e: any) {
       if (typeof e === 'string') {
         this.headerMessage = e;
